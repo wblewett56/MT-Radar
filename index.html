@@ -1,72 +1,71 @@
 <div class="grid">
-    <div class="imagecontainer">
-        <img src="https://droughtmonitor.unl.edu/data/png/current/current_mt_none.png" alt="Drought" onclick="showFullScreen(this.src)">
-        <div class="imagetitle">MT Drought</div>
-    </div>
-    <div class="imagecontainer">
-        <img src="https://radar.weather.gov/ridge/standard/KMSX_loop.gif" alt="Radar" onclick="showFullScreen(this.src)">
-        <div class="imagetitle">MT RADAR</div>
-    </div>
-    <div class="imagecontainer">
-        <img src="https://www.wpc.ncep.noaa.gov/noaa/noaa.gif" alt="Forecast" onclick="showFullScreen(this.src)">
-        <div class="imagetitle">Forecast</div>
-    </div>
-</div>
-<div class="grid">
-    <div class="imagecontainer">
+    <div class="imagecontainer" style="grid-column: span 2; grid-row: span 2;">
         <iframe 
-            src="https://embed.windy.com/embed2.html?lat=45&lon=-110&zoom=4&layer=snow&model=ecmwf&menu=L&menuBar=topbar&metricWind=km%2Fh&pressure=&rh=&temp=&dens=&waveHeight=&wavePeriod=swell&waveDirection=&swellHeight=&swellPeriod=&swellDirection=&rain=false&snow=true&clouds=&precipitation=&basic=true&stormReports=false&geolines=false&locations=false&dx=0.5&dy=0.5&dt=12&menuIconVisibility=menu&timeBarColor=purple&timeBarOpacity=0.4&timeLabels=values&timeLabelFontSize=3.2&timeLabelColor=white&timeLabelOutlineColor=black&timeZone=UTC&now=2025-10-01T21:29&level=surface&overlay=wind&metricPrecip=inch%2Fh"
-            style="width: 100%; height: 100%; border: none; border-radius: 8px; min-height: 35vh;"
-            title="ECMWF Snow Precip Forecast: Colorado to BC"
+            src="https://embed.windy.com/embed2.html?lat=45&lon=-110&zoom=4&layer=snow,wind&model=ecmwf&menu=L&menuBar=topbar&metricWind=mph&metricPrecip=inch%2Fh&rain=false&snow=true&timeBarColor=purple&now=2025-10-02T14:31&level=surface&overlay=wind"
+            style="width: 100%; height: 100%; border: none; border-radius: 8px; min-height: 80vh;"
+            title="ECMWF Powder Forecast: Wind + Snow"
             onclick="showFullScreen('https://www.windy.com/?snow,45,-110,4,m:ecmwf');">
         </iframe>
         <div class="imagetitle">Snow Precip Forecast</div>
     </div>
-    <div class="imagecontainer">
-        <img src="https://cdn.star.nesdis.noaa.gov/GOES18/ABI/SECTOR/wus/GEOCOLOR/GOES18-WUS-GEOCOLOR-1000x1000.gif" alt="GOES WUS" onclick="showFullScreen(this.src)">
-        <div class="imagetitle">GOES WUS</div>
+    <div class="imagecontainer" style="grid-column: 3; grid-row: 1 / span 1; min-height: 30vh;">
+        <img src="https://radar.weather.gov/ridge/standard/KMSX_loop.gif" alt="Radar" onclick="showFullScreen(this.src)">
+        <div class="imagetitle">MT Radar</div>
     </div>
-    <div class="imagecontainer">
-        <img src="https://radar.weather.gov/ridge/standard/KBLX_loop.gif" alt="Billings Radar" onclick="showFullScreen(this.src)">
-        <div class="imagetitle">MT RADAR</div>
+    <div class="imagecontainer" style="grid-column: 3; grid-row: 2 / span 1; min-height: 30vh;">
+        <img src="https://www.wpc.ncep.noaa.gov/noaa/noaa.gif" alt="NOAA Weather Map" style="width: 100%; height: 100%; object-fit: contain;" onclick="showFullScreen(this.src)">
+        <div class="imagetitle">NOAA Weather Map</div>
+    </div>
+    <div class="imagecontainer" style="grid-column: 3; grid-row: 3 / span 1; min-height: 30vh; display: none;"> <!-- Hidden placeholder -->
     </div>
 </div>
 <div id="clock">
     <span id="date"></span> &nbsp; <span id="utc"></span> &nbsp; <span id="local"></span>
 </div>
 <div id="buttons">
-    <button onclick="window.open('https://wcc.sc.egov.usda.gov/nwcc/site?sitenum=385')">Carrot Basin</button>
+    <button onclick="window.open('https://wcc.sc.egov.usda.gov/nwcc/site?sitenum=385')">Carrot</button>
     <button onclick="window.open('https://wcc.sc.egov.usda.gov/nwcc/site?sitenum=760&state=mt')">Skalkaho</button>
     <button onclick="window.open('https://wcc.sc.egov.usda.gov/nwcc/site?sitenum=667')">Seeley</button>
-    <button onclick="window.open('https://wcc.sc.egov.usda.gov/nwcc/site?sitenum=860')">Island Park</button>
-    <button onclick="window.open('https://www.bigskyresort.com/current-conditions/webcams')">Big Sky Cams</button>
-    <button onclick="window.open('https://www.avalanche.org')">Avalanche Bulletins</button>
+    <button onclick="window.open('https://wcc.sc.egov.usda.gov/nwcc/site?sitenum=860')">Island</button>
+    <button onclick="window.open('https://www.bigskyresort.com/current-conditions/webcams')">Big Sky</button>
+    <button onclick="window.open('https://www.avalanche.org')">Avalanche</button>
+    <button onclick="window.open('https://powderchasers.com/')">Powderchasers</button>
 </div>
+<a href="https://www.opensnow.com/mt/big-sky/forecast" target="_blank" style="display: block; text-align: center; color: springgreen; font-size: 0.9rem; margin: 5px 0; text-decoration: none;">OpenSnow Big Sky</a>
+<a href="https://powderchasers.com/" target="_blank" style="display: block; text-align: center; color: springgreen; font-size: 0.9rem; margin: 0; text-decoration: none;">Powderchasers</a>
 <style>
     body { background: black; color: white; font-family: monospace; text-align: center; margin: 0; padding: 0; height: 100vh; overflow: hidden; }
-    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; width: 100vw; }
-    .grid:first-child { height: 45vh; }
-    .grid:last-child { height: 45vh; }
-    .imagecontainer { position: relative; width: 100%; margin: 0; padding: 0; min-height: 40vh; background: #333; border: 1px solid #555; display: flex; flex-direction: column; justify-content: center; }
-    img { width: 100%; max-width: 100%; max-height: 35vh; object-fit: contain; display: block; margin: auto; cursor: pointer; }
-    .imagetitle { position: absolute; top: 5%; left: 50%; transform: translateX(-50%); background: black; padding: 3px; font-size: 1rem; white-space: nowrap; z-index: 10; }
-    .error { color: red; font-size: 0.9rem; padding: 5px; text-align: center; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; width: 100vw; height: 90vh; }
+    .grid:first-child { height: 90vh; }
+    .imagecontainer { position: relative; width: 100%; margin: 0; padding: 0; background: #333; border: 1px solid #555; display: flex; flex-direction: column; justify-content: center; }
+    img { width: 100%; max-width: 100%; max-height: 25vh; object-fit: contain; display: block; margin: auto; cursor: pointer; }
+    .imagetitle { position: absolute; top: 2%; left: 50%; transform: translateX(-50%); background: black; padding: 2px; font-size: 0.8rem; white-space: nowrap; z-index: 10; }
+    .error { color: red; font-size: 0.8rem; padding: 5px; text-align: center; }
     #clock { position: fixed; bottom: 0; left: 0; right: 0; background: darkslategray; padding: 5px; height: 5vh; display: flex; align-items: center; justify-content: center; }
-    #date { font-size: 1rem; color: white; }
-    #utc { font-size: 1.2rem; color: yellow; }
-    #local { font-size: 1rem; color: lightsalmon; }
-    #buttons { position: fixed; bottom: 5vh; left: 0; right: 0; background: darkslategray; padding: 5px; height: 5vh; display: flex; align-items: center; justify-content: center; gap: 5px; overflow-x: auto; }
-    button { font-size: 0.8rem; min-width: 80px; background: springgreen; border: none; color: black; padding: 5px; }
+    #date { font-size: 0.8rem; color: white; }
+    #utc { font-size: 1rem; color: yellow; }
+    #local { font-size: 0.8rem; color: lightsalmon; }
+    #buttons { position: fixed; bottom: 5vh; left: 0; right: 0; background: darkslategray; padding: 5px; height: 5vh; display: flex; align-items: center; justify-content: center; gap: 2px; overflow-x: auto; white-space: nowrap; }
+    button { font-size: 0.7rem; min-width: 50px; background: springgreen; border: none; color: black; padding: 3px; margin: 0 2px; }
     @media (max-width: 600px) {
-        .grid:first-child { height: 40vh; }
-        .grid:last-child { height: 40vh; }
-        .imagecontainer { min-height: 30vh; }
-        img, iframe { max-height: 25vh; }
-        .imagetitle { font-size: 0.7rem; top: 2%; }
-        #date, #local { font-size: 0.7rem; }
-        #utc { font-size: 0.9rem; }
-        button { font-size: 0.6rem; min-width: 60px; padding: 3px; }
+        .grid:first-child { height: 80vh; }
+        .imagecontainer { min-height: 20vh; }
+        img, iframe { max-height: 18vh; }
+        .imagetitle { font-size: 0.6rem; top: 1%; padding: 1px; }
+        #date, #local { font-size: 0.6rem; }
+        #utc { font-size: 0.8rem; }
+        #buttons { height: 6vh; gap: 1px; }
+        button { font-size: 0.5rem; min-width: 40px; padding: 2px; margin: 0 1px; }
         .grid { grid-template-columns: 1fr; width: 100%; gap: 1px; }
+        .imagecontainer[style*="grid-column: span 2"] {
+            grid-column: span 1;
+            grid-row: span 1;
+            min-height: 20vh;
+        }
+        .imagecontainer[style*="min-height: 30vh"] {
+            min-height: 20vh;
+        }
+        #clock { height: 4vh; }
     }
     .fullscreen-overlay {
         display: none;
@@ -84,15 +83,28 @@
         max-width: 90%;
         max-height: 90%;
     }
+    /* Custom styling for spanning container 4 */
+    .imagecontainer[style*="grid-column: span 2"] {
+        grid-column: span 2;
+        grid-row: span 2;
+        min-height: 80vh;
+    }
+    @media (max-width: 600px) {
+        .imagecontainer[style*="grid-column: span 2"] {
+            grid-column: span 1;
+            grid-row: span 1;
+            min-height: 20vh;
+        }
+    }
 </style>
 <script>
     function showTime() {
-        const offset = -5; // UTC offset for CDT (-5 during DST as of Oct 1, 2025)
+        const offset = -5; // UTC offset for CDT (as of Oct 2, 2025)
         const now = new Date();
         const utcTime = new Date(now.getTime() + offset * 3600000);
         const localTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
         const utcStr = utcTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
-        document.getElementById('date').innerText = now.toLocaleDateString('en-US', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+        document.getElementById('date').innerText = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
         document.getElementById('utc').innerText = `UTC ${utcStr}`;
         document.getElementById('local').innerText = localTime;
         setTimeout(showTime, 1000);
