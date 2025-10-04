@@ -37,178 +37,286 @@
         }
         return gk_fileData[filename] || "";
         }
-        </script><div class="grid">
-    <div class="imagecontainer" style="grid-column: span 2; grid-row: span 2;">
-        <iframe 
-            src="https://embed.windy.com/embed2.html?lat=46.548&lon=-111.568&zoom=7&layer=snowAccu&model=ecmwf&metricWind=mph&metricPrecip=inch%2Fh&rain=false&snow=true&timeBarColor=purple&level=surface&overlay=snowAccu&timeControl=true"
-            style="width: 100%; height: 100%; border: none; border-radius: 8px; min-height: 60vh; max-height: 90vh;"
-            title="ECMWF Powder Forecast: Snow Accumulation"
-            onclick="showFullScreen('https://www.windy.com/-New-snow-snowAccu?snowAccu,46.548,-111.568,7');"
-            ontouchstart="showFullScreen('https://www.windy.com/-New-snow-snowAccu?snowAccu,46.548,-111.568,7');">
-        </iframe>
-        <div class="imagetitle">Snow Precip Forecast</div>
-    </div>
-    <div class="imagecontainer" style="grid-column: 3; grid-row: 1 / span 1; min-height: 30vh;">
-        <img src="https://radar.weather.gov/ridge/standard/KMSX_loop.gif" alt="Radar" onclick="showFullScreen(this.src)" ontouchstart="showFullScreen(this.src)">
-        <div class="imagetitle">MT Radar</div>
-    </div>
-    <div class="imagecontainer" style="grid-column: 3; grid-row: 2 / span 1; min-height: 30vh;">
-        <img src="https://www.wpc.ncep.noaa.gov/noaa/noaa.gif" alt="NOAA Weather Map" style="width: 100%; height: 100%; object-fit: contain;" onclick="showFullScreen(this.src)" ontouchstart="showFullScreen(this.src)">
-        <div class="imagetitle">NOAA Weather Map</div>
-    </div>
-    <div class="imagecontainer" style="grid-column: 3; grid-row: 3 / span 1; min-height: 30vh; display: none;"> <!-- Hidden placeholder -->
-    </div>
-</div>
-<div id="clock">
-    <span id="date"></span> &nbsp; <span id="utc"></span> &nbsp; <span id="local"></span>
-</div>
-<div id="buttons">
-    <button onclick="window.open('https://wcc.sc.egov.usda.gov/nwcc/site?sitenum=385')" ontouchstart="window.open('https://wcc.sc.egov.usda.gov/nwcc/site?sitenum=385')">Carrot</button>
-    <button onclick="window.open('https://wcc.sc.egov.usda.gov/nwcc/site?sitenum=760&state=mt')" ontouchstart="window.open('https://wcc.sc.egov.usda.gov/nwcc/site?sitenum=760&state=mt')">Skalkaho</button>
-    <button onclick="window.open('https://wcc.sc.egov.usda.gov/nwcc/site?sitenum=667')" ontouchstart="window.open('https://wcc.sc.egov.usda.gov/nwcc/site?sitenum=667')">Seeley</button>
-    <button onclick="window.open('https://wcc.sc.egov.usda.gov/nwcc/site?sitenum=860')" ontouchstart="window.open('https://wcc.sc.egov.usda.gov/nwcc/site?sitenum=860')">Island</button>
-    <button onclick="window.open('https://www.bigskyresort.com/current-conditions/webcams')" ontouchstart="window.open('https://www.bigskyresort.com/current-conditions/webcams')">Big Sky</button>
-    <button onclick="window.open('https://www.avalanche.org')" ontouchstart="window.open('https://www.avalanche.org')">Avalanche</button>
-    <button onclick="window.open('https://powderchasers.com/')" ontouchstart="window.open('https://powderchasers.com/')">Powderchasers</button>
-</div>
-<a href="https://www.opensnow.com/mt/big-sky/forecast" target="_blank" style="display: block; text-align: center; color: springgreen; font-size: 0.9rem; margin: 5px 0; text-decoration: none;">OpenSnow Big Sky</a>
-<a href="https://powderchasers.com/" target="_blank" style="display: block; text-align: center; color: springgreen; font-size: 0.9rem; margin: 0; text-decoration: none;">Powderchasers</a>
-<style>
-    body { background: black; color: white; font-family: monospace; text-align: center; margin: 0; padding: 0; height: 100vh; overflow: hidden; touch-action: manipulation; }
-    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; width: 100vw; height: 85vh; } /* Reduced grid height to prevent bottom clipping */
-    .grid:first-child { height: 85vh; } /* Match grid height */
-    .imagecontainer { position: relative; width: 100%; margin: 0; padding: 0; background: #333; border: 1px solid #555; display: flex; flex-direction: column; justify-content: center; }
-    img { width: 100%; max-width: 100%; max-height: 25vh; object-fit: contain; display: block; margin: auto; cursor: pointer; touch-action: manipulation; }
-    img:active { opacity: 0.8; } /* Visual feedback on touch */
-    .imagetitle { position: absolute; top: 2%; left: 50%; transform: translateX(-50%); background: black; padding: 2px; font-size: 0.8rem; white-space: nowrap; z-index: 10; }
-    .error { color: red; font-size: 0.8rem; padding: 5px; text-align: center; }
-    #clock { position: fixed; bottom: 0; left: 0; right: 0; background: darkslategray; padding: 5px; height: 5vh; display: flex; align-items: center; justify-content: center; }
-    #date { font-size: 0.8rem; color: white; }
-    #utc { font-size: 1rem; color: yellow; }
-    #local { font-size: 0.8rem; color: lightsalmon; }
-    #buttons { position: fixed; bottom: 10vh; left: 0; right: 0; background: darkslategray; padding: 5px; height: 5vh; display: flex; align-items: center; justify-content: center; gap: 2px; overflow-x: auto; white-space: nowrap; } /* Adjusted to prevent clipping */
-    button { font-size: 0.7rem; min-width: 50px; background: springgreen; border: none; color: black; padding: 3px; margin: 0 2px; touch-action: manipulation; }
-    button:active { background: #00cc66; } /* Visual feedback on touch */
-    @media (max-width: 600px) {
-        .grid { 
-            grid-template-columns: 1fr; /* Single column for mobile */
-            grid-template-rows: auto; /* Allow rows to size based on content */
-            height: auto; /* Let grid height adjust dynamically */
-            gap: 4px; /* Slightly larger gap for clarity */
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <style>
+        body {
+            background: black;
+            color: white;
+            font-family: monospace;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            overflow: hidden;
+            touch-action: manipulation;
+            display: flex;
+            flex-direction: column;
         }
-        .grid:first-child { height: auto; }
-        .imagecontainer { 
-            min-height: 30vh; /* Consistent minimum height for all containers */
-            max-height: 40vh; /* Cap height to prevent stretching */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            width: 100vw;
+            flex: 1 1 auto; /* Allow grid to take available space */
         }
-        img, iframe { 
-            max-height: 35vh; /* Slightly increased for better visibility */
-            width: 100%; 
-            object-fit: contain; 
+        .imagecontainer {
+            position: relative;
+            width: 100%;
+            background: #333;
+            border: 1px solid #555;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
         }
-        .imagetitle { 
-            font-size: 0.6rem; 
-            top: 1%; 
-            padding: 1px; 
+        iframe {
+            width: 98%;
+            height: 98%;
+            border: none;
+            border-radius: 20px;
         }
-        #date, #local { font-size: 0.6rem; }
-        #utc { font-size: 0.8rem; }
-        #buttons { 
-            height: 6vh; 
-            gap: 3px; /* Increased gap for better touch separation */
-            padding: 5px; 
-            bottom: 10vh; /* Adjusted to ensure visibility */
+        img {
+            width: 100%;
+            max-height: 25vh;
+            object-fit: contain;
+            display: block;
+            margin: auto;
+            cursor: pointer;
+            touch-action: manipulation;
         }
-        button { 
-            font-size: 0.6rem; 
-            min-width: 60px; /* Larger touch target */
-            padding: 6px 8px; /* Increased padding for easier tapping */
-            margin: 0 2px; 
+        img:active {
+            opacity: 0.8;
+        }
+        .imagetitle {
+            position: absolute;
+            top: 2%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: black;
+            padding: 2px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            z-index: 10;
+        }
+        #clock {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: darkslategray;
+            padding: 5px;
+            height: 5vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            margin: 0; /* Ensure no margin pushes it */
+        }
+        #date {
+            font-size: 0.8rem;
+            color: white;
+        }
+        #utc {
+            font-size: 1rem;
+            color: yellow;
+        }
+        #local {
+            font-size: 0.8rem;
+            color: lightsalmon;
+        }
+        #buttons {
+            position: fixed;
+            bottom: 5vh; /* Position just above clock */
+            left: 0;
+            right: 0;
+            background: darkslategray;
+            padding: 5px;
+            height: 5vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            overflow-x: auto;
+            white-space: nowrap;
+            width: 100%;
+            margin: 0; /* Ensure no margin pushes it */
+        }
+        button {
+            font-size: 0.7rem;
+            min-width: 50px;
+            background: springgreen;
+            border: none;
+            color: black;
+            padding: 3px;
+            margin: 0 2px;
+            touch-action: manipulation;
+        }
+        button:active {
+            background: #00cc66;
+        }
+        .fullscreen-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            touch-action: none;
+        }
+        .fullscreen-image {
+            max-width: 90%;
+            max-height: 90%;
         }
         .imagecontainer[style*="grid-column: span 2"] {
-            grid-column: 1; /* Single column layout */
-            grid-row: auto; /* Auto row placement */
-            min-height: 40vh; /* Larger for Windy iframe */
-            max-height: 50vh; /* Cap for mobile */
-            border: 4px solid #777; /* Thicker border for mobile */
+            grid-column: span 2;
+            grid-row: span 2;
+            min-height: 60vh;
+            max-height: 90vh;
+            border: 4px solid #777;
         }
-        .imagecontainer[style*="min-height: 30vh"] {
-            min-height: 30vh; /* Consistent with others */
-            max-height: 40vh; /* Cap for consistency */
-        }
-        #clock { height: 4vh; bottom: 0; } /* Ensure clock stays at bottom */
-    }
-    .fullscreen-overlay {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.9);
-        z-index: 1000;
-        justify-content: center;
-        align-items: center;
-        touch-action: none; /* Prevent touch scrolling on overlay */
-    }
-    .fullscreen-image {
-        max-width: 90%;
-        max-height: 90%;
-    }
-    /* Custom styling for spanning container 4 */
-    .imagecontainer[style*="grid-column: span 2"] {
-        grid-column: span 2;
-        grid-row: span 2;
-        min-height: 60vh; /* Desktop sizing */
-        max-height: 90vh;
-        border: 4px solid #777; /* Thicker border for Windy container */
-    }
-    @media (max-width: 600px) {
-        .imagecontainer[style*="grid-column: span 2"] {
-            grid-column: 1;
-            grid-row: auto;
-            min-height: 40vh;
-            max-height: 50vh;
-            border: 4px solid #777; /* Thicker border for mobile */
-        }
-    }
-</style>
-<script>
-    function showTime() {
-        const offset = -5; // UTC offset for CDT (as of Oct 2, 2025)
-        const now = new Date();
-        const utcTime = new Date(now.getTime() + offset * 3600000);
-        const localTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
-        const utcStr = utcTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
-        document.getElementById('date').innerText = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-        document.getElementById('utc').innerText = `UTC ${utcStr}`;
-        document.getElementById('local').innerText = localTime;
-        setTimeout(showTime, 1000);
-    }
-    window.onload = showTime;
-
-    function showFullScreen(imageSrc) {
-        const overlay = document.createElement('div');
-        overlay.className = 'fullscreen-overlay';
-        const img = document.createElement('img');
-        img.className = 'fullscreen-image';
-        img.src = imageSrc;
-        img.onclick = () => document.body.removeChild(overlay); // Close on image click
-        img.ontouchstart = (e) => {
-            e.preventDefault(); // Prevent default touch behavior
-            document.body.removeChild(overlay); // Close on image touch
-        };
-        overlay.appendChild(img);
-        document.body.appendChild(overlay);
-        overlay.style.display = 'flex';
-        overlay.onclick = (e) => {
-            if (e.target === overlay) document.body.removeChild(overlay); // Close on overlay click
-        };
-        overlay.ontouchstart = (e) => {
-            if (e.target === overlay) {
-                e.preventDefault(); // Prevent default touch behavior
-                document.body.removeChild(overlay); // Close on overlay touch
+        @media (max-width: 600px) {
+            .grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+                height: auto;
+                gap: 4px;
             }
-        };
-    }
-</script>
+            .imagecontainer {
+                min-height: 30vh;
+                max-height: 40vh;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+            }
+            img, iframe {
+                max-height: 35vh;
+                width: 100%;
+                object-fit: contain;
+            }
+            .imagetitle {
+                font-size: 0.6rem;
+                top: 1%;
+                padding: 1px;
+            }
+            #date, #local {
+                font-size: 0.6rem;
+            }
+            #utc {
+                font-size: 0.8rem;
+            }
+            #buttons {
+                height: 6vh;
+                gap: 3px;
+                padding: 5px;
+                bottom: 6vh; /* Adjusted for mobile clock height */
+            }
+            button {
+                font-size: 0.6rem;
+                min-width: 60px;
+                padding: 6px 8px;
+                margin: 0 2px;
+            }
+            .imagecontainer[style*="grid-column: span 2"] {
+                grid-column: 1;
+                grid-row: auto;
+                min-height: 40vh;
+                max-height: 50vh;
+                border: 4px solid #777;
+            }
+            .imagecontainer[style*="min-height: 30vh"] {
+                min-height: 30vh;
+                max-height: 40vh;
+            }
+            #clock {
+                height: 4vh;
+                bottom: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid">
+        <div class="imagecontainer" style="grid-column: span 2; grid-row: span 2;">
+            <iframe 
+                src="https://embed.windy.com/embed.html?type=map&location=coordinates&metricRain=default&metricTemp=default&metricWind=mph&zoom=6&overlay=snowAccu&product=ecmwf&level=surface&lat=44.672&lon=-111.081&detailLat=45.232&detailLon=-111.45&detail=true"
+                style="min-height: 60vh; max-height: 90vh;"
+                title="ECMWF Powder Forecast: Snow Accumulation"
+                onclick="showFullScreen('https://www.windy.com/-New-snow-snowAccu?snowAccu,44.672,-111.081,6');"
+                ontouchstart="showFullScreen('https://www.windy.com/-New-snow-snowAccu?snowAccu,44.672,-111.081,6');">
+            </iframe>
+            <div class="imagetitle">Snow Precip Forecast</div>
+        </div>
+        <div class="imagecontainer" style="grid-column: 3; grid-row: 1 / span 1; min-height: 30vh;">
+            <img src="https://radar.weather.gov/ridge/standard/KMSX_loop.gif" alt="Radar" onclick="showFullScreen(this.src)" ontouchstart="showFullScreen(this.src)">
+            <div class="imagetitle">MT Radar</div>
+        </div>
+        <div class="imagecontainer" style="grid-column: 3; grid-row: 2 / span 1; min-height: 30vh;">
+            <img src="https://www.wpc.ncep.noaa.gov/noaa/noaa.gif" alt="NOAA Weather Map" style="width: 100%; height: 100%; object-fit: contain;" onclick="showFullScreen(this.src)" ontouchstart="showFullScreen(this.src)">
+            <div class="imagetitle">NOAA Weather Map</div>
+        </div>
+        <div class="imagecontainer" style="grid-column: 3; grid-row: 3 / span 1; min-height: 30vh; display: none;"></div>
+    </div>
+    <div id="buttons">
+        <button onclick="window.open('https://wcc.sc.egov.usda.gov/nwcc/site?sitenum=385')" ontouchstart="window.open('https://wcc.sc.egov.usda.gov/nwcc/site?sitenum=385')">Carrot</button>
+        <button onclick="window.open('https://wcc.sc.egov.usda.gov/nwcc/site?sitenum=760&state=mt')" ontouchstart="window.open('https://wcc.sc.egov.usda.gov/nwcc/site?sitenum=760&state=mt')">Skalkaho</button>
+        <button onclick="window.open('https://wcc.sc.egov.usda.gov/nwcc/site?sitenum=667')" ontouchstart="window.open('https://wcc.sc.egov.usda.gov/nwcc/site?sitenum=667')">Seeley</button>
+        <button onclick="window.open('https://wcc.sc.egov.usda.gov/nwcc/site?sitenum=860')" ontouchstart="window.open('https://wcc.sc.egov.usda.gov/nwcc/site?sitenum=860')">Island</button>
+        <button onclick="window.open('https://www.bigskyresort.com/current-conditions/webcams')" ontouchstart="window.open('https://www.bigskyresort.com/current-conditions/webcams')">Big Sky</button>
+        <button onclick="window.open('https://www.avalanche.org')" ontouchstart="window.open('https://www.avalanche.org')">Avalanche</button>
+        <button onclick="window.open('https://powderchasers.com/')" ontouchstart="window.open('https://powderchasers.com/')">Powderchasers</button>
+    </div>
+    <div id="clock">
+        <span id="date"></span> &nbsp; <span id="utc"></span> &nbsp; <span id="local"></span>
+    </div>
+    <a href="https://www.opensnow.com/mt/big-sky/forecast" target="_blank" style="display: block; text-align: center; color: springgreen; font-size: 0.9rem; margin: 5px 0; text-decoration: none;">OpenSnow Big Sky</a>
+    <script>
+        function showTime() {
+            const offset = -5; // UTC offset for CDT (as of Oct 4, 2025)
+            const now = new Date();
+            const utcTime = new Date(now.getTime() + offset * 3600000);
+            const localTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+            const utcStr = utcTime.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+            document.getElementById('date').innerText = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+            document.getElementById('utc').innerText = `UTC ${utcStr}`;
+            document.getElementById('local').innerText = localTime;
+            setTimeout(showTime, 1000);
+        }
+        window.onload = showTime;
+
+        function showFullScreen(imageSrc) {
+            const overlay = document.createElement('div');
+            overlay.className = 'fullscreen-overlay';
+            const img = document.createElement('img');
+            img.className = 'fullscreen-image';
+            img.src = imageSrc;
+            img.onclick = () => document.body.removeChild(overlay);
+            img.ontouchstart = (e) => {
+                e.preventDefault();
+                document.body.removeChild(overlay);
+            };
+            overlay.appendChild(img);
+            document.body.appendChild(overlay);
+            overlay.style.display = 'flex';
+            overlay.onclick = (e) => {
+                if (e.target === overlay) document.body.removeChild(overlay);
+            };
+            overlay.ontouchstart = (e) => {
+                if (e.target === overlay) {
+                    e.preventDefault();
+                    document.body.removeChild(overlay);
+                }
+            };
+        }
+    </script>
+</body>
+</html>
