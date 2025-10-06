@@ -38,159 +38,120 @@
         return gk_fileData[filename] || "";
         }
         </script><!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ski Forecast Dashboard</title>
     <style>
-        body {
-            background: black;
-            color: white;
-            font-family: monospace;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
+        body { background: black; color: white; font-family: monospace; text-align: center; margin: 0; padding: 0; height: 100vh; overflow: hidden; }
+        .grid { 
+            display: grid; 
+            grid-template-columns: 2fr 1fr 1fr; /* Adjusted for ~2.5 columns for iframe */
+            gap: 2px; 
+            width: 100vw; 
+            height: 90vh; 
         }
-        .grid {
-            display: flex;
-            flex: 1; /* Take up available space */
-            width: 100%;
-            height: 90vh; /* Main content area */
+        .grid:first-child { height: 90vh; }
+        .imagecontainer { 
+            position: relative; 
+            width: 100%; 
+            margin: 0; 
+            padding: 0; 
+            background: #333; 
+            border: 1px solid #555; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
         }
-        .imagecontainer {
-            position: relative;
-            margin: 0;
-            padding: 0;
-            background: #333;
-            border: 1px solid #555;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: stretch;
+        img { 
+            width: 100%; 
+            max-width: 100%; 
+            max-height: 25vh; 
+            object-fit: contain; 
+            display: block; 
+            margin: auto; 
+            cursor: pointer; 
         }
-        img {
-            width: 100%;
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            display: block;
-            margin: auto;
-            cursor: pointer;
+        .imagetitle { 
+            position: absolute; 
+            top: 2%; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            background: black; 
+            padding: 2px; 
+            font-size: 0.8rem; 
+            white-space: nowrap; 
+            z-index: 10; 
         }
-        iframe {
-            width: 100%; /* Fill 100% of container width */
-            height: 100%; /* Fill 100% of container height */
-            border: none;
-            border-radius: 8px;
-            display: block;
-            object-fit: cover; /* Ensure it covers the space */
+        .error { 
+            color: red; 
+            font-size: 0.8rem; 
+            padding: 5px; 
+            text-align: center; 
         }
-        .imagetitle {
-            position: absolute;
-            top: 2%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: black;
-            padding: 2px;
-            font-size: 0.8rem;
-            white-space: nowrap;
-            z-index: 10;
-        }
-        .error {
-            color: red;
-            font-size: 0.8rem;
-            padding: 5px;
-            text-align: center;
-        }
-        #clock {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: darkslategray;
-            padding: 5px;
-            height: 5vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        #clock { 
+            position: fixed; 
+            bottom: 0; 
+            left: 0; 
+            right: 0; 
+            background: darkslategray; 
+            padding: 5px; 
+            height: 5vh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
         }
         #date { font-size: 0.8rem; color: white; }
         #utc { font-size: 1rem; color: yellow; }
         #local { font-size: 0.8rem; color: lightsalmon; }
-        #buttons {
-            position: fixed;
-            bottom: 5vh;
-            left: 0;
-            right: 0;
-            background: darkslategray;
-            padding: 5px;
-            height: 5vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 2px;
-            overflow-x: auto;
-            white-space: nowrap;
+        #buttons { 
+            position: fixed; 
+            bottom: 5vh; 
+            left: 0; 
+            right: 0; 
+            background: darkslategray; 
+            padding: 5px; 
+            height: 5vh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 2px; 
+            overflow-x: auto; 
+            white-space: nowrap; 
         }
-        button {
-            font-size: 0.7rem;
-            min-width: 50px;
-            background: springgreen;
-            border: none;
-            color: black;
-            padding: 3px;
-            margin: 0 2px;
+        button { 
+            font-size: 0.7rem; 
+            min-width: 50px; 
+            background: springgreen; 
+            border: none; 
+            color: black; 
+            padding: 3px; 
+            margin: 0 2px; 
         }
         @media (max-width: 600px) {
-            .grid { flex-direction: column; height: 80vh; }
+            .grid:first-child { height: 80vh; }
             .imagecontainer { min-height: 20vh; }
-            img, iframe { max-height: 100%; }
+            img, iframe { max-height: 18vh; }
             .imagetitle { font-size: 0.6rem; top: 1%; padding: 1px; }
             #date, #local { font-size: 0.6rem; }
             #utc { font-size: 0.8rem; }
             #buttons { height: 6vh; gap: 1px; }
             button { font-size: 0.5rem; min-width: 40px; padding: 2px; margin: 0 1px; }
+            .grid { 
+                grid-template-columns: 1fr; /* Stack vertically on mobile */
+                width: 100%; 
+                gap: 1px; 
+            }
+            .imagecontainer[style*="grid-column: span 2"] {
+                grid-column: span 1;
+                grid-row: span 1;
+                min-height: 20vh;
+            }
+            .imagecontainer[style*="min-height: 30vh"] {
+                min-height: 20vh;
+            }
             #clock { height: 4vh; }
-        }
-        /* Flexbox layout for main content */
-        .main-container {
-            display: flex;
-            flex: 1;
-            width: 100%;
-        }
-        .windy-container {
-            flex: 2.5; /* 2.5 times the width of other containers */
-            min-height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-        .stacked-container {
-            flex: 1; /* Equal width for stacked containers */
-            display: flex;
-            flex-direction: column;
-            min-height: 100%;
-        }
-        .stacked-item {
-            flex: 1;
-            min-height: 50%; /* Split height evenly */
-        }
-        @media (min-width: 601px) and (max-width: 900px) {
-            .windy-container iframe {
-                min-height: 60vh;
-            }
-            .stacked-item {
-                min-height: 30vh;
-            }
-        }
-        @media (min-width: 901px) {
-            .windy-container iframe {
-                min-height: 80vh;
-            }
-            .stacked-item {
-                min-height: 40vh;
-            }
         }
         .fullscreen-overlay {
             display: none;
@@ -208,29 +169,41 @@
             max-width: 90%;
             max-height: 90%;
         }
+        /* Custom styling for spanning container */
+        .imagecontainer[style*="grid-column: span 2"] {
+            grid-column: span 2;
+            grid-row: span 2;
+            min-height: 80vh;
+        }
+        @media (max-width: 600px) {
+            .imagecontainer[style*="grid-column: span 2"] {
+                grid-column: span 1;
+                grid-row: span 1;
+                min-height: 20vh;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="grid">
-        <div class="main-container">
-            <div class="windy-container imagecontainer">
-                <iframe 
-                    src="https://embed.windy.com/embed2.html?lat=45&lon=-110&zoom=4&layer=snow,wind&model=ecmwf&metricWind=mph&metricPrecip=inch%2Fh&rain=false&snow=true&timeBarColor=purple&level=surface&overlay=wind&timeControl=true"
-                    title="ECMWF Powder Forecast: Wind + Snow"
-                    onclick="showFullScreen('https://www.windy.com/?snow,46.5,-115,5,m:ecmwf');">
-                </iframe>
-                <div class="imagetitle">Snow Precip Forecast</div>
-            </div>
-            <div class="stacked-container imagecontainer">
-                <div class="stacked-item">
-                    <img src="https://radar.weather.gov/ridge/standard/KMSX_loop.gif" alt="Radar" onclick="showFullScreen(this.src)">
-                    <div class="imagetitle">MT Radar</div>
-                </div>
-                <div class="stacked-item">
-                    <img src="https://www.wpc.ncep.noaa.gov/noaa/noaa.gif" alt="NOAA Weather Map" style="width: 100%; height: 100%; object-fit: contain;" onclick="showFullScreen(this.src)">
-                    <div class="imagetitle">NOAA Weather Map</div>
-                </div>
-            </div>
+        <div class="imagecontainer" style="grid-column: span 2; grid-row: span 2;">
+            <iframe 
+                src="https://embed.windy.com/embed.html?type=map&location=coordinates&metricRain=in&metricTemp=°F&metricWind=mph&zoom=5&overlay=snowAccu&product=ecmwf&level=surface&lat=44.72&lon=-106.328&detailLat=45.232020266317775&detailLon=-111.44779516533845&marker=true"
+                style="width: 100%; height: 100%; border: none; border-radius: 8px; min-height: 80vh;"
+                title="ECMWF Powder Forecast: Wind + Snow"
+                onclick="showFullScreen('https://www.windy.com/?snowAccu,44.72,-106.328,5,m:ecmwf');"
+                frameborder="0"
+                allowfullscreen>
+            </iframe>
+            <div class="imagetitle">Snow Precip Forecast</div>
+        </div>
+        <div class="imagecontainer" style="grid-column: 3; grid-row: 1 / span 1; min-height: 30vh;">
+            <img src="https://radar.weather.gov/ridge/standard/KMSX_loop.gif" alt="Radar" onclick="showFullScreen(this.src)">
+            <div class="imagetitle">MT Radar</div>
+        </div>
+        <div class="imagecontainer" style="grid-column: 3; grid-row: 2 / span 1; min-height: 30vh;">
+            <img src="https://www.wpc.ncep.noaa.gov/noaa/noaa.gif" alt="NOAA Weather Map" style="width: 100%; height: 100%; object-fit: contain;" onclick="showFullScreen(this.src)">
+            <div class="imagetitle">NOAA Weather Map</div>
         </div>
     </div>
     <div id="clock">
@@ -245,11 +218,10 @@
         <button onclick="window.open('https://www.avalanche.org')">Avalanche</button>
         <button onclick="window.open('https://powderchasers.com/')">Powderchasers</button>
     </div>
-    <a href="https://www.opensnow.com/mt/big-sky/forecast" target="_blank" style="display: block; text-align: center; color: springgreen; font-size: 0.9rem; margin: 5px 0; text-decoration: none;">OpenSnow Big Sky</a>
     <a href="https://powderchasers.com/" target="_blank" style="display: block; text-align: center; color: springgreen; font-size: 0.9rem; margin: 0; text-decoration: none;">Powderchasers</a>
     <script>
         function showTime() {
-            const offset = -5; // UTC offset for CDT (as of Oct 5, 2025)
+            const offset = -5; // UTC offset for CDT (as of Oct 6, 2025)
             const now = new Date();
             const utcTime = new Date(now.getTime() + offset * 3600000);
             const localTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
@@ -278,6 +250,7 @@
     </script>
 </body>
 </html>
+
 
 
 
